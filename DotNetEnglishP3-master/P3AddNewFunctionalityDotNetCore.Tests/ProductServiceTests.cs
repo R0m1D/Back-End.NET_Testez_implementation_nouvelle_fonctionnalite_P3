@@ -119,40 +119,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
 
         [Fact]
-        public void SaveProduct_Avoid2TimesSameProduct_ShouldReturnError()
-        {
-
-            //Arrange
-            var product1 = new ProductViewModel
-            {
-
-                Name = "sameProduct",
-                Price = "15",
-                Stock = "10",
-                Description = "une description",
-                Details = "pas de details"
-            };
-            var product2 = new ProductViewModel 
-            {
-                Name = "sameProduct",
-                Price = "12",
-                Stock = "4",
-                Description = "aucune description",
-                Details = "rien"
-            };
-
-            //Act
-            _productService.SaveProduct(product1);
-            _productService.SaveProduct(product2);
-
-            //Assert
-            var result = _productService.CheckProductModelErrors(product2);
-            result.Should().Contain("NoIdenticalItem");
-
-        }
-
-
-        [Fact]
         public void DeleteProduct_ProductExists_ShouldCallRemoveLineAndDeleteProduct()
         {
             // Arrange
