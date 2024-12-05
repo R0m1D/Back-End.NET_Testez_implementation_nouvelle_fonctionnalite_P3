@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration; // Nécessaire pour accéder à IConfiguration
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
 using Xunit;
 
@@ -19,8 +20,14 @@ public class DatabaseIntegrationTests
 
     public DatabaseIntegrationTests()
     {
-        // Chaîne de connexion à la base SQL Server
-        _connectionString = "Server=ROMAINPC\\SQLEXPRESSROMAIN;Database=P3Referential-2f561d3b-493f-46fd-83c9-6e2643e7bd0a;Trusted_Connection=True;MultipleActiveResultSets=true";
+        // Configuration de l'instance pour charger le fichier appsettings.json
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory()) // Définir le chemin de base
+            .AddJsonFile("appsettings.json") // Ajouter le fichier appsettings.json
+            .Build();
+
+        // Récupérer la chaîne de connexion depuis appsettings.json
+        _connectionString = configuration.GetConnectionString("P3Referential");
     }
 
     private AppDbContext CreateContext()
@@ -40,6 +47,5 @@ public class DatabaseIntegrationTests
             var canConnect = await context.Database.CanConnectAsync();
             canConnect.Should().BeTrue(); // Vérifie que la connexion à la base est possible
         }
-
     }
 }

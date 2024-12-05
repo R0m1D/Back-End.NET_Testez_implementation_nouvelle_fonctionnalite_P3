@@ -36,7 +36,7 @@ builder.Services.AddDbContext<P3Referential>(options =>
 builder.Services.AddDbContext<AppIdentityDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("P3Identity")));
 
-//builder.Services.AddDefaultIdentity<IdentityUser>()
+builder.Services.AddDefaultIdentity<IdentityUser>()
         .AddEntityFrameworkStores<AppIdentityDbContext>()
         .AddDefaultTokenProviders();
 
@@ -82,3 +82,5 @@ app.MapControllerRoute(
 await IdentitySeedData.EnsurePopulated(app);
 
 app.Run();
+
+public partial class Program { };
