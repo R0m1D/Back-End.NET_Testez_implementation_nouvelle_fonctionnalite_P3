@@ -1,11 +1,9 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration; // Nécessaire pour accéder à IConfiguration
+using Microsoft.Extensions.Configuration;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
-using Xunit;
+using System.Net;
 
 public class AppDbContext : DbContext
 {
@@ -47,5 +45,22 @@ public class DatabaseIntegrationTests
             var canConnect = await context.Database.CanConnectAsync();
             canConnect.Should().BeTrue(); // Vérifie que la connexion à la base est possible
         }
+    }
+
+
+    [Fact]
+    public async Task GET_retrieves_Product_page()
+    {
+        // Arrange : Créer une instance de WebApplicationFactory pour simuler l'application
+        await using var application = new WebApplicationFactory<Program>();
+
+        // Créer un client HTTP à partir de l'application
+        using var client = application.CreateClient();
+
+        // Act : Envoyer une requête GET à l'endpoint "/Product"
+        var response = await client.GetAsync("/Product");
+
+        // Assert : Vérifier que le statut HTTP est OK
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }

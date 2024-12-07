@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Xunit;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
+using System.Net;
 
 public class InMemoryDatabaseIntegrationTests
 {

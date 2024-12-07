@@ -6,7 +6,6 @@ using P3AddNewFunctionalityDotNetCore.Models.Services;
 using P3AddNewFunctionalityDotNetCore.Models;
 using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
-using FluentAssertions;
 using System;
 
 
@@ -45,8 +44,8 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             var productViewModel = new ProductViewModel
             {
                 Name = "Test",
-                Price = "813",
-                Stock = "42",
+                Price = 813,
+                Stock = 42,
                 Description = "Description test",
                 Details = "detail test"
             };
@@ -66,40 +65,40 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             var noName = new ProductViewModel
             {
                 Name = "",                              // Nom invalide
-                Price = "813",                          // Prix valide
-                Stock = "42",                           // Stock valide
+                Price = 813,                            // Prix valide
+                Stock = 42,                             // Stock valide
                 Description = "description inutile",    // Description remplie
                 Details = "detail inutile"              // Détails remplie
             };
             var wrongPrice = new ProductViewModel
             {
                 Name = "test",                          // Nom invalide
-                Price = "-13",                          // Prix invalide
-                Stock = "42",                           // Stock valide
+                Price = -13,                            // Prix invalide
+                Stock = 42,                             // Stock valide
                 Description = "description inutile",    // Description remplie
                 Details = "detail inutile"              // Détails remplie
             };
             var wrongStock = new ProductViewModel
             {
                 Name = "test",                          // Nom invalide
-                Price = "813",                          // Prix valide
-                Stock = "oui",                          // Stock invalide
+                Price = 813,                            // Prix valide
+                Stock = -2,                             // Stock invalide
                 Description = "description inutile",    // Description remplie
                 Details = "detail inutile"              // Détails remplie
             };
             var noPrice = new ProductViewModel
             {
-                Name = "",                              // Nom valide
-                Price = "",                             // Prix invalide
-                Stock = "42",                           // Stock valide
+                Name = "test",                          // Nom valide                       
+                                                        // Prix invalide
+                Stock = 42,                             // Stock valide
                 Description = "description inutile",    // Description remplie
                 Details = "detail inutile"              // Détails remplie
             };
             var noStock = new ProductViewModel
             {
                 Name = "test",                          // Nom valide
-                Price = "813",                          // Prix valide
-                Stock = "",                             // Stock invalide
+                Price = 813,                            // Prix valide
+                                                        // Stock invalide
                 Description = "description inutile",    // Description remplie
                 Details = "detail inutile"              // Détails remplie
             };

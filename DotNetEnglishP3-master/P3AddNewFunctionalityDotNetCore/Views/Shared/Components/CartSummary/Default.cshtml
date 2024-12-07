@@ -6,7 +6,7 @@
         <small class="navbar-text">
             <b>@Localizer["YourCart"]:</b>
             @Model.Lines.Sum(x => x.Quantity) item(s)
-            @Model.GetTotalValue().ToString("ouioui")
+            @Model.GetTotalValue().ToString("Cart")
         </small>
     }
     <a class="btn btn-sm btn-secondary navbar-btn" asp-controller="Cart" asp-action="Index">

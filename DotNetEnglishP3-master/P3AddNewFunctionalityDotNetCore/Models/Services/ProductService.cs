@@ -40,8 +40,8 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
                 products.Add(new ProductViewModel
                 {
                     Id = product.Id,
-                    Stock = product.Quantity.ToString(),
-                    Price = product.Price.ToString(CultureInfo.InvariantCulture),
+                    Stock = product.Quantity,
+                    Price = product.Price,
                     Name = product.Name,
                     Description = product.Description,
                     Details = product.Details
@@ -106,8 +106,8 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             Product productEntity = new Product
             {
                 Name = product.Name,
-                Price = double.Parse(product.Price),
-                Quantity = Int32.Parse(product.Stock),
+                Price = product.Price,
+                Quantity = product.Stock,
                 Description = product.Description,
                 Details = product.Details
             };
@@ -116,9 +116,6 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
 
         public void DeleteProduct(int id)
         {
-            // TODO what happens if a product has been added to a cart and has been later removed from the inventory ?
-            // delete the product form the cart by using the specific method
-            // => the choice is up to the student
             _cart.RemoveLine(GetProductById(id));
 
             _productRepository.DeleteProduct(id);

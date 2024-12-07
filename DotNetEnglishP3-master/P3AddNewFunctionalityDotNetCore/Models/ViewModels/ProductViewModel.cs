@@ -16,12 +16,12 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
         // Le prix est obligatoire et doit être un nombre positif
         [Required(ErrorMessage = "MissingPrice")]
         [Range(0.01, double.MaxValue, ErrorMessage = "PriceNotGreaterThanZero")]
-        public string Price { get; set; }
+        public double Price { get; set; }
 
         // La quantité en stock est obligatoire et doit être un entier positif
         [Required(ErrorMessage = "MissingQuantity")]
         [Range(1, int.MaxValue, ErrorMessage = "StockNotGreaterThanZero")]
-        public string Stock { get; set; }
+        public int Stock { get; set; }
 
         // Description facultative
         public string Description { get; set; }

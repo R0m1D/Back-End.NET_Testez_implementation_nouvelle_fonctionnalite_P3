@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using FluentAssertions;
 using P3AddNewFunctionalityDotNetCore.Controllers;
-using P3AddNewFunctionalityDotNetCore.Models;
 using System.Threading.Tasks;
 using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
