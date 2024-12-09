@@ -27,7 +27,7 @@ public class DatabaseIntegrationTests
         // Récupérer la chaîne de connexion depuis appsettings.json
         _connectionString = configuration.GetConnectionString("P3Referential");
     }
-
+    //Arrange
     private AppDbContext CreateContext()
     {
         return new AppDbContext(
@@ -42,7 +42,9 @@ public class DatabaseIntegrationTests
         // Vérifier la connexion à la base de données via le DbContext
         using (var context = CreateContext())
         {
+            //Act
             var canConnect = await context.Database.CanConnectAsync();
+            //Assert
             canConnect.Should().BeTrue(); // Vérifie que la connexion à la base est possible
         }
     }

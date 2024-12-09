@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using P3AddNewFunctionalityDotNetCore.Models;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
 using System.Net;
 
@@ -15,13 +16,14 @@ public class InMemoryDatabaseIntegrationTests
     }
 
     [Fact]
-    public async Task AddProduct_ToInMemoryDatabase_ShouldSucceed()
+    public async Task AddProductToCart_ShouldAddProductAndVerifyCartContents()
     {
-        // Arrange: Création du contexte InMemory
+        // Arrange: Création du contexte InMemory et initialisation
         using var context = CreateInMemoryContext();
-
+        var cart = new Cart();
         var productEntity = new Product
         {
+            Id = 1, // Assurez-vous qu'un identifiant est défini
             Name = "Sample Product",
             Price = 49.99,
             Quantity = 10,
@@ -29,22 +31,28 @@ public class InMemoryDatabaseIntegrationTests
             Details = "This product is perfect for testing purposes."
         };
 
-        // Act: Ajout du produit
+        // Ajout du produit à la base de données
         context.Products.Add(productEntity);
         await context.SaveChangesAsync();
 
-        // Assert: Vérification
-        var addedProduct = await context.Products.FirstOrDefaultAsync(p => p.Name == "Sample Product");
-        addedProduct.Should().NotBeNull();
-        addedProduct.Name.Should().Be("Sample Product");
-        addedProduct.Price.Should().Be(49.99);
-        addedProduct.Quantity.Should().Be(10);
-        addedProduct.Description.Should().Be("A high-quality sample product");
-        addedProduct.Details.Should().Be("This product is perfect for testing purposes.");
+        // Act: Ajouter le produit au panier
+        cart.AddItem(productEntity, 2);
 
-        //supprime le produit pour ne pas interférer avec le test de supression
-        var productToDelete = await context.Products.FirstOrDefaultAsync(p => p.Name == "Sample Product");
+        // Assert: Vérifier que le produit est dans le panier
+        var cartItems = cart.Lines.ToList(); // Récupération des lignes du panier
+        cartItems.Should().HaveCount(1); // Vérifier qu'il y a un seul produit dans le panier
+        var cartProduct = cartItems.First();
+        cartProduct.Product.Name.Should().Be("Sample Product");
+        cartProduct.Product.Price.Should().Be(49.99);
+        cartProduct.Quantity.Should().Be(2);
+
+        // Vérifier que les quantités en stock dans la base restent inchangées (car le panier est distinct)
+        var addedProduct = await context.Products.FirstOrDefaultAsync(p => p.Id == productEntity.Id);
+        addedProduct.Should().NotBeNull();
+        addedProduct.Quantity.Should().Be(10); // La quantité d'origine reste inchangée
     }
+
+
 
     [Fact]
     public async Task DeleteProduct_FromInMemoryDatabase_ShouldSucceed()
