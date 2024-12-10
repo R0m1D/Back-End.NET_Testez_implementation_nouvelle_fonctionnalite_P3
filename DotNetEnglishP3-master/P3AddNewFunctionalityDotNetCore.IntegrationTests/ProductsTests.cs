@@ -1,9 +1,7 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using P3AddNewFunctionalityDotNetCore.Models;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
-using System.Net;
 
 public class InMemoryDatabaseIntegrationTests
 {
@@ -50,6 +48,8 @@ public class InMemoryDatabaseIntegrationTests
         var addedProduct = await context.Products.FirstOrDefaultAsync(p => p.Id == productEntity.Id);
         addedProduct.Should().NotBeNull();
         addedProduct.Quantity.Should().Be(10); // La quantité d'origine reste inchangée
+        //delete product
+        context.Products.Remove(addedProduct);
     }
 
 
